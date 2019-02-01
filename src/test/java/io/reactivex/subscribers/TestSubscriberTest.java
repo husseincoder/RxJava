@@ -61,8 +61,8 @@ public class TestSubscriberTest {
         oi.subscribe(ts);
 
         thrown.expect(AssertionError.class);
-        // FIXME different message pattern
-        // thrown.expectMessage("Number of items does not match. Provided: 1  Actual: 2");
+        thrown.expectMessage("Value count differs; expected: 1 [1] but was: 2 [1, 2] "
+            + "(latch = 0, values = 2, errors = 0, completions = 1)");
 
         ts.assertValues(1);
         ts.assertValueCount(2);
@@ -76,8 +76,8 @@ public class TestSubscriberTest {
         oi.subscribe(ts);
 
         thrown.expect(AssertionError.class);
-        // FIXME different message pattern
-        // thrown.expectMessage("Value at index: 1 expected to be [3] (Integer) but was: [2] (Integer)");
+         thrown.expectMessage("Values at position 1 differ; expected: 3 (class: Integer) but was: "
+             + "2 (class: Integer) (latch = 0, values = 2, errors = 0, completions = 1)");
 
         ts.assertValues(1, 3);
         ts.assertValueCount(2);
@@ -152,8 +152,7 @@ public class TestSubscriberTest {
         p.onNext(2);
 
         thrown.expect(AssertionError.class);
-        // FIXME different message pattern
-        // thrown.expectMessage("No terminal events received.");
+         thrown.expectMessage("Subscriber still running! (latch = 1, values = 2, errors = 0, completions = 0)");
 
         ts.assertValues(1, 2);
         ts.assertValueCount(2);
